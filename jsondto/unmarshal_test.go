@@ -21,3 +21,6 @@ func TestUnmarshalSimple(t *testing.T) {
         }
     }
 }
+
+func TestUnmarshalErrors(t *testing.T) {
+}

@@ -33,6 +33,12 @@ func decodeJSON(dec *json.Decoder) (val json.Marshaler, err error) {
 }
 
 // UnmarshalJSON unmarshals d into a value-type.
+// 
+// errors:
+//
+//      *SyntaxError        
+//      *MultipleValuesError
+//
 func UnmarshalJSON(d []byte) (val json.Marshaler, err error) {
     var dec *json.Decoder = json.NewDecoder(bytes.NewBuffer(d))
     defer wrapError(&err)
