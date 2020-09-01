@@ -2,7 +2,17 @@ package jsondto
 
 import (
     "encoding/json"
+    "reflect"
 )
+
+// UnsupportedTypeError indicates an illegal type.
+type UnsupportedTypeError struct {
+    T reflect.Type
+}
+
+func (err *UnsupportedTypeError) Error() string {
+    return `jsondto: UnsupportedTypeError: illegal type ` + err.T.String()
+}
 
 // SyntaxError indicates a syntax-error in the input-data.
 type SyntaxError struct {
