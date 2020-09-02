@@ -84,6 +84,13 @@ func (o *Object) Put(k String, v json.Marshaler) error {
     return nil
 }
 
+// Range iterates over o, until f==false.
+func (o *Object) Range(f func(k String, v json.Marshaler) bool) {
+    for k,v := range o.m {
+        if !f(k, v) { return }
+    }
+}
+
 // UnmarshalJSON unmarshals a JSON-object into o.
 //
 // errors:
