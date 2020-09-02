@@ -59,3 +59,14 @@ func UnmarshalJSON(d []byte) (val json.Marshaler, err error) {
     }
     return nil,err
 }
+
+// UnmarshalContainer wraps UnmarshalJSON, for use with json.Decoder.
+type UnmarshalContainer struct {
+    Val json.Marshaler
+    Err error
+}
+
+func (c *UnmarshalContainer) UnmarshalJSON(d []byte) error {
+    c.Val,c.Err = UnmarshalJSON(d)
+    return c.Err
+}
