@@ -1,9 +1,19 @@
 package jsondto
 
 import (
+    "fmt"
     "encoding/json"
     "reflect"
 )
+
+// BoundsError indicates an array-access out-of-bounds.
+type BoundsError struct {
+    Index int
+}
+
+func (err *BoundsError) Error() string {
+    return fmt.Sprintf(`jsondto: BoundsError: index %d out of bounds`, err.Index)
+}
 
 // UnmarshalTypeError indicates a JSON-value, inappropriate for a specific go-type.
 type UnmarshalTypeError struct {
