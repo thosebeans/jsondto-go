@@ -5,6 +5,19 @@ import (
     "reflect"
 )
 
+// UnmarshalTypeError indicates a JSON-value, inappropriate for a specific go-type.
+type UnmarshalTypeError struct {
+    Value string // json-value-type: null,bool,int,float,string,object,array
+    Type  string // go-type: Object,Array
+}
+
+func (err *UnmarshalTypeError) Error() string {
+    return `jsondto: UnmarshalTypeError: attempted unmarshal of ` +
+                err.Value +
+                ` into ` +
+                err.Type
+}
+
 // UnsupportedTypeError indicates an illegal type.
 type UnsupportedTypeError struct {
     T reflect.Type

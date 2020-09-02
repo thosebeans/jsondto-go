@@ -28,6 +28,12 @@ func decodeJSON(dec *json.Decoder) (val json.Marshaler, err error) {
     case string:
         return String(t),nil
     case json.Delim:
+        switch t {
+        case '{':
+            var o *Object = &Object{}
+            return o,o.decodeJSON(dec)
+        case '[':
+        }
     }
     return nil,nil
 }
