@@ -103,8 +103,24 @@ func (a *Array) Len() int {
 
 // MarshalJSON returns a JSON-array.
 func (a *Array) MarshalJSON() ([]byte, error) {
-    a.init()
-    return json.Marshal(a.s)
+    if a.Len() == 0 {
+        return []byte(`[]`),nil
+    }
+    var buff *bytes.Buffer = bytes.NewBuffer(make([]byte, 0, uint(a.Len()) * 8))
+    buff.WriteRune('[')
+    var first bool = true
+    for i,l := 0,a.Len(); i < l; i++ {
+        if !first {
+            buff.WriteRune(',')
+        }
+        var v json.Marshaler = a.At(i)
+        var b []byte
+        b,_ = v.MarshalJSON()
+        buff.Write(b)
+        first = false
+    }
+    buff.WriteRune(']')
+    return buff.Bytes(),nil
 }
 
 // Remove removes the element at index i.

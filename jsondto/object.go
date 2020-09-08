@@ -65,8 +65,26 @@ func (o *Object) Len() int {
 
 // MarshalJSON returns a JSON-object.
 func (o *Object) MarshalJSON() ([]byte, error) {
-    o.init()
-    return json.Marshal(o.m)
+    if o.Len() == 0 {
+        return []byte(`{}`),nil
+    }
+    var buff *bytes.Buffer = bytes.NewBuffer(make([]byte, 0, uint(o.Len()) * 8))
+    buff.WriteRune('{')
+    var first bool = true
+    for k,v := range o.m {
+        if !first {
+            buff.WriteRune(',')
+        }
+        var b []byte
+        b,_ = k.MarshalJSON()
+        buff.Write(b)
+        buff.WriteRune(':')
+        b,_ = v.MarshalJSON()
+        buff.Write(b)
+        first = false
+    }
+    buff.WriteRune('}')
+    return buff.Bytes(),nil
 }
 
 // Put adds a kv-pair.

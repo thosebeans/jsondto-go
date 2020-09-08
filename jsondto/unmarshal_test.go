@@ -1,8 +1,11 @@
 package jsondto
 
 import (
-    "testing"
-    "encoding/json"
+	"encoding/json"
+	"io"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestUnmarshalSimple(t *testing.T) {
@@ -23,4 +26,9 @@ func TestUnmarshalSimple(t *testing.T) {
 }
 
 func TestUnmarshalErrors(t *testing.T) {
+    var err error
+    _,err = UnmarshalJSON(nil)
+    assert.Equal(t, io.EOF, err)
+    _,err = UnmarshalJSON([]byte(`{"asd":}`))
+    assert.IsType(t, &SyntaxError{}, err)
 }
