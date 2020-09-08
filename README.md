@@ -28,6 +28,10 @@ func main() {
 }
 ```
 
+## API-Docs
+
+API-Docs can be found at [go.dev](https://pkg.go.dev/github.com/thosebeans/jsondto-go/jsondto)
+
 ## License
 
 [Unlicense](https://unlicense.org)
